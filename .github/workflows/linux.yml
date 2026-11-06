@@ -1,0 +1,24 @@
+name: Linux
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.2
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Install native dependencies
+        run: sudo apt-get update && sudo apt-get install -y build-essential pkg-config libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev
+      - name: Install JavaScript dependencies
+        run: bun install --cwd ui --frozen-lockfile
+      - name: Test UI
+        run: bun run test
+      - name: Test Rust on Linux
+        run: cargo test --manifest-path src-tauri/Cargo.toml

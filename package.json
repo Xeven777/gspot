@@ -1,0 +1,12 @@
+{
+  "name": "gspot",
+  "private": true,
+  "description": "Local-first Grammarly-style writing assistant for macOS and Linux",
+  "scripts": {
+    "setup": "bun install --cwd ui",
+    "dev": "cd src-tauri && ../ui/node_modules/.bin/tauri dev",
+    "build": "cd src-tauri && ../ui/node_modules/.bin/tauri build",
+    "build:linux": "scripts/build-linux.sh",
+    "test": "cd ui && bun run test"
+  }
+}
